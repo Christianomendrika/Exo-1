@@ -1,0 +1,56 @@
+Algorithme algopytable
+Début
+    Fonction TableDeVérité(fonction_logique, variables)
+        En-tête <- Concaténer(variables, [fonction_logique])
+        Afficher En-tête
+        Afficher LigneDeSéparation(En-tête)
+
+        Pour chaque assignation dans ProduitCartésien([0, 1], longueur(variables))
+            assignation_str <- ConvertirAssignationEnChaine(assignation)
+            résultat <- ÉvaluerFonction(fonction_logique, variables, assignation)
+            Afficher assignation_str + " | " + résultat
+
+    Fin Fonction
+
+    Fonction PremièreFormeCanonique(variables, fonction_logique)
+        termes <- ListeVide
+
+        Pour chaque index, caractère dans Énumérer(fonction_logique)
+            Si caractère == '1' alors
+                Ajouter variables[index] à termes
+            Sinon si caractère == '0' alors
+                Ajouter "~" + variables[index] à termes
+            Fin Si
+        Fin Pour
+
+        Retourner ConcaténerAvecSéparateur(termes, " | ")
+    Fin Fonction
+
+    Fonction DeuxièmeFormeCanonique(variables, fonction_logique)
+        termes <- ListeVide
+
+        Pour chaque index, caractère dans Énumérer(fonction_logique)
+            Si caractère == '0' alors
+                Ajouter variables[index] à termes
+            Sinon si caractère == '1' alors
+                Ajouter "~" + variables[index] à termes
+            Fin Si
+        Fin Pour
+
+        Retourner ConcaténerAvecSéparateur(termes, " & ")
+    Fin Fonction
+
+    DébutProgramme
+        fonction_logique <- Saisir("Entrez la fonction logique en utilisant les opérateurs logiques : ")
+        variables <- Séparer(Saisir("Entrez les variables séparées par des espaces : "), " ")
+
+        Afficher("Table de vérité :")
+        TableDeVérité(fonction_logique, variables)
+
+        Afficher("Première forme canonique :")
+        Afficher PremièreFormeCanonique(variables, fonction_logique)
+
+        Afficher("Deuxième forme canonique :")
+        Afficher DeuxièmeFormeCanonique(variables, fonction_logique)
+    FinProgramme
+Fin
